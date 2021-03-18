@@ -4,6 +4,7 @@ import guru.springframework.api.v1.model.CategoryDTO;
 import guru.springframework.api.v1.model.CategoryListDTO;
 import guru.springframework.domain.Category;
 import guru.springframework.services.CategoryService;
+import jdk.jfr.ContentType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

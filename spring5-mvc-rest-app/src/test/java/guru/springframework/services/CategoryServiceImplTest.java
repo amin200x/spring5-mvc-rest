@@ -1,13 +1,13 @@
 package guru.springframework.services;
 
 import guru.springframework.api.v1.model.CategoryDTO;
-import guru.springframework.api.v1.model.CustomerDTO;
-import guru.springframework.controller.CustomerController;
+import guru.springframework.controller.CategoryController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,14 +23,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest
+class CategoryServiceImplTest {
 
-class CustomerServiceImplTest {
-    public static final String LAST_NAME = "Ghadimian";
-    public static final String FIRST_NAME = "Amin";
+    public static final long ID = 125L;
+    public static final String NAME = "Nuts";
     @Mock
-    CustomerService customerService;
+    CategoryService categoryService;
     @InjectMocks
-    CustomerController customerController;
+    CategoryController categoryController;
 
 
     MockMvc mockMvc;
@@ -39,32 +40,35 @@ class CustomerServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         //categoryService = new CategoryServiceImpl(new CategoryMapper(new ModelMapper()), categoryRepository);
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
     }
 
     @Test
     void getAllCategories() throws Exception {
-        List<CustomerDTO> categories = Arrays.asList(new CustomerDTO(), new CustomerDTO(), new CustomerDTO(), new CustomerDTO());
-        when(customerService.getAllCustomers()).thenReturn(categories);
+        List<CategoryDTO> categories = Arrays.asList(new CategoryDTO(), new CategoryDTO(), new CategoryDTO(), new CategoryDTO());
+        when(categoryService.getAllCategories()).thenReturn(categories);
 
 
-        mockMvc.perform(get("/api/v1/customers")
-                .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/categories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customers", hasSize(4)));
+                .andExpect(jsonPath("$.categories", hasSize(4)));
 
     }
 
     @Test
     void getCategoryByName() throws Exception {
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setLastName(LAST_NAME);
-        customerDTO.setFirstName(FIRST_NAME);
+        CategoryDTO category = new CategoryDTO();
+        category.setId(ID);
+        category.setName(NAME);
 
-        when(customerService.getCustomerByLastName(anyString())).thenReturn(customerDTO);
+        when(categoryService.getCategoryByName(anyString())).thenReturn(category);
 
-        mockMvc.perform(get("/api/v1/customers/"+LAST_NAME).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/categories/"+NAME)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)));
+                .andExpect(jsonPath("$.name", equalTo(NAME)));
     }
 }
