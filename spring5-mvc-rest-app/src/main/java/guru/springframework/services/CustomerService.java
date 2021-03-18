@@ -1,8 +1,7 @@
 package guru.springframework.services;
 
-import guru.springframework.api.v1.model.CategoryDTO;
-import guru.springframework.api.v1.model.CustomerDTO;
-import org.springframework.http.HttpStatus;
+
+import guru.springframework.model.CustomerDTO;
 
 import java.util.List;
 

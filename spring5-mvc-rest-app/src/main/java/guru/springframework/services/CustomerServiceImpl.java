@@ -3,7 +3,7 @@ package guru.springframework.services;
 import guru.springframework.api.v1.mapper.CategoryMapper;
 import guru.springframework.api.v1.mapper.CustomerMapper;
 import guru.springframework.api.v1.model.CategoryDTO;
-import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.controller.CustomerController;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CategoryRepository;
